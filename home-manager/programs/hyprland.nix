@@ -56,7 +56,7 @@ in
       animations.enabled = false;
       # binds
       "$mod" = "SUPER";
-      exec-once = [ "hyprpaper" "hypridle" ];
+      exec-once = [ "hyprpaper" "hypridle" "dunst" ];
       exec = "pkill waybar; waybar";
       bind =
         [

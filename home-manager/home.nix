@@ -44,6 +44,7 @@ in
     feh
     git
     keepassxc
+    pass
     imagemagick
     bat
     exiftool
@@ -53,16 +54,10 @@ in
     brightnessctl
     yt-dlp
     kdePackages.neochat
+    xfce.thunar-bare
     # for qt6 to work with wayland display scaling properly 
     qt6.qtwayland
-    # for dolphin to be able to create thumbnails and icons
-    #kdePackages.kdegraphics-thumbnailers
-    #kdePackages.ffmpegthumbs
-    #kdePackages.qt6ct
-    #kdePackages.breeze
-    #kdePackages.breeze-gtk
-    #kdePackages.breeze-icons
-    xfce.thunar-bare
+    # thumbnail stuff
     xfce.tumbler
     ffmpegthumbnailer
   ];

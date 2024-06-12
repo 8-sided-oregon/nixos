@@ -77,6 +77,7 @@
     pavucontrol
     nfs-utils
     python3
+    psmisc
   ];
 
   services.gnome.gnome-keyring.enable = true;
