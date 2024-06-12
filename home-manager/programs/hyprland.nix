@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  lock_cmd = "pgrep hyprlock && hyprlock";
+  lock_cmd = "swaylock";
 in
 {
   options.hyprland.resolution = lib.mkOption {
@@ -68,7 +68,7 @@ in
           "$mod SHIFT, E, exit"
           "$mod, f, togglefloating,"
           "$mod, v, fullscreen, 0"
-          "$mod, m, exec, hyprlock"
+          "$mod, m, exec, ${lock_cmd}"
           "$mod, P, pseudo,"
           "$mod, S, togglesplit,"
           "$mod, Tab, cyclenext,"
@@ -129,13 +129,13 @@ in
       general = {
         after_sleep_cmd = "hyprctl dispatch dpms on";
         ignore_dbus_inhibit = false;
-        lock_cmd = "hyprlock";
+        inherit lock_cmd;
       };
       listener = 
         [
           {
-            timeout = 300;
-            on-timeout = "hyprlock";
+            timeout = 10;
+            on-timeout = lock_cmd;
           }
           {
             timeout = 360;
@@ -150,43 +150,9 @@ in
         ];
     };
 
-    programs.hyprlock.enable = true;
-    programs.hyprlock.settings = {
-      background = [{
-        path = 
-          "/home/ava/media/images/wallpapers/Cloclkwmisumi.webp";
-        blur_passes = 2;
-        blur_size = 4;
-      }];
-      input-field = [{
-        size = "300, 50";
-        position = "0, -80";
-        monitor = "";
-        dots_center = true;
-        fade_on_empty = false;
-        font_color = "rgba(0, 0, 0, 128)";
-        inner_color = "rgb(249, 157, 188)";
-        outer_color = "rgb(245, 52, 127)";
-        shadow_color = "rgb(254, 3, 106)";
-        outline_thickness = 4;
-        placeholder_text = 
-          ''<span foreground="##0000007f">Password...</span>'';
-        shadow_passes = 1;
-      }];
-    };
+    programs.swaylock.enable = true;
+    programs.swaylock.settings.image = "${config.home.homeDirectory}/media/images/wallpapers/jerma985.png";
 
-    # Copies files from ../wallpapers to ~/media/images/wallpapers
-    home.file =
-      let
-        list2attrs = lib.foldl (left: right: left // { "${toString right}" = right; }) {};
-        last = list: builtins.elemAt list (builtins.length list - 1);
-        fname = path: last (lib.path.subpath.components (lib.path.splitRoot path).subpath);
-        wallpapers = lib.filesystem.listFilesRecursive ../wallpapers;
-        f = _: source: { 
-          inherit source;
-          target = "media/images/wallpapers/${fname source}" ;
-        };
-      in
-      lib.mapAttrs f (list2attrs wallpapers);
+    home.file."media/images/wallpapers".source = ../wallpapers;
   };
 }
