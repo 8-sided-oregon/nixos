@@ -76,7 +76,6 @@
     fd
     pavucontrol
     nfs-utils
-    python3
     psmisc
   ];
 

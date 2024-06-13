@@ -3,8 +3,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    awesome-neovim-plugins.url = "github:m15a/flake-awesome-neovim-plugins";
+    awesome-neovim-plugins.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, home-manager }: 
+  outputs = { self, nixpkgs, home-manager, awesome-neovim-plugins }@inputs: 
   let
     config = hostname:
     let
@@ -28,7 +30,7 @@
             useGlobalPkgs = true;
             useUserPackages = true;
             users.ava = import ./home-manager/home.nix;
-            extraSpecialArgs.hostnameCfg = hostnameCfg;
+            extraSpecialArgs = inputs // { inherit hostnameCfg; };
           };
         }
       ];
