@@ -45,6 +45,7 @@ in
     git
     keepassxc
     pass
+    age
     imagemagick
     bat
     exiftool
@@ -54,6 +55,7 @@ in
     brightnessctl
     yt-dlp
     kdePackages.neochat
+    signal-desktop
     xfce.thunar-bare
     # for qt6 to work with wayland display scaling properly 
     qt6.qtwayland

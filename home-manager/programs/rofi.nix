@@ -2,6 +2,7 @@
 {
   programs.rofi = {
     enable = true;
+    package = pkgs.rofi-wayland;
     font = "Ubuntu Nerd Font 14";
     terminal = "${pkgs.kitty}/bin/kitty";
     plugins = with pkgs; [ rofi-vpn ];
