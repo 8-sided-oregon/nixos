@@ -45,6 +45,7 @@
       {
         plugin = awesome-neovim-plugins.packages.x86_64-linux.NeoColumn-nvim;
         config = ''
+          vim.keymap.set("n", "<leader>h", "<cmd>ToggleNeoColumn<cr>", { noremap = true, silent = true })
           require("NeoColumn").setup {
             NeoColumn = "120"
           }
@@ -52,9 +53,11 @@
         type = "lua";
       }
     ];
+
     extraConfig = ''
       lua require("lsp")
       set statusline=%!v:lua.require'statusline'.statusline()
+      let &stc='%=%{v:relnum?v:relnum:v:lnum} '
       noremap <leader>t <cmd>split<cr><cmd>wincmd w<cr><cmd>terminal zsh<cr><cmd>echomsg join(["Opened terminal in buffer", bufnr("%")])<cr>
       set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab rnu
       set statusline=%!v:lua.require'statusline'.statusline()

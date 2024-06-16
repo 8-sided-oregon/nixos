@@ -134,7 +134,7 @@ in
       listener = 
         [
           {
-            timeout = 10;
+            timeout = 300;
             on-timeout = lock_cmd;
           }
           {

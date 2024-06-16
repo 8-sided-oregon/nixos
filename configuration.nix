@@ -77,6 +77,7 @@
     pavucontrol
     nfs-utils
     psmisc
+    gocryptfs
   ];
 
   services.gnome.gnome-keyring.enable = true;
