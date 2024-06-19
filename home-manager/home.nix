@@ -54,8 +54,10 @@ in
     hypridle
     brightnessctl
     yt-dlp
+    libreoffice
     kdePackages.neochat
     signal-desktop
+    discordo
     xfce.thunar-bare
     # for qt6 to work with wayland display scaling properly 
     qt6.qtwayland

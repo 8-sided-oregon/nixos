@@ -38,6 +38,12 @@ in
         "col.active_border" = "rgb(fe036a) rgb(f5347f) 45deg";
         "col.inactive_border" = "rgb(8a0030)";
       };
+      group = {
+        "col.border_active" = "rgb(d633ff)";
+        "col.border_inactive" = "rgb(a300cc)";
+        "col.border_locked_active" = "rgb(ff4dff)";
+        "col.border_locked_inactive" = "rgb(e600e6)";
+      };
       master = {
         new_is_master = true;
       };
@@ -69,10 +75,13 @@ in
           "$mod, f, togglefloating,"
           "$mod, v, fullscreen, 0"
           "$mod, m, exec, ${lock_cmd}"
-          "$mod, P, pseudo,"
-          "$mod, S, togglesplit,"
+          "$mod, p, pseudo,"
+          "$mod, t, togglegroup,"
+          "$mod, s, togglesplit,"
           "$mod, Tab, cyclenext,"
           "$mod, Tab, bringactivetotop,"
+          "$mod, q, movegroupwindow, b"
+          "$mod, e, movegroupwindow, f"
           "$mod, h, movefocus, l"
           "$mod, l, movefocus, r"
           "$mod, k, movefocus, u"
