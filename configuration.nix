@@ -78,7 +78,11 @@
     nfs-utils
     psmisc
     gocryptfs
+    # TODO: put steam into home.nix
+    steamcmd
   ];
+
+  programs.steam.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
 
@@ -87,6 +91,7 @@
   services.logind.lidSwitch = "suspend";
   services.logind.lidSwitchExternalPower = "suspend";
   services.logind.lidSwitchDocked = "suspend";
+
 
   # NEVER CHANGE (obv)
   system.stateVersion = "24.05";
