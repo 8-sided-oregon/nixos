@@ -104,5 +104,5 @@
     })
   '';
 
-  home.file.".config/nvim/lua/statusline.lua".source = ../configs/neovim/statusline.lua;
+  home.file.".config/nvim/lua/statusline.lua".source = ./configs/neovim/statusline.lua;
 }

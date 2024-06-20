@@ -1,25 +1,16 @@
-{ config, pkgs, lib, hostnameCfg, ... }:
-let
-  programs = [
-    "firefox"
-    "hyfetch"
-    "hyprland"
-    "kitty"
-    "neovim"
-    "rofi"
-    "waybar"
-    "zsh"
-    "git"
+{ config, pkgs, lib, hostnameCfg, ... }: {
+  imports = [ 
+    (hostnameCfg ./. "")
+    ./programs/firefox
+    ./programs/hyfetch
+    ./programs/hyprland
+    ./programs/kitty
+    ./programs/neovim
+    ./programs/rofi
+    ./programs/waybar
+    ./programs/zsh
+    ./programs/git
   ];
-  program2import = name: [ (lib.path.append ./programs "${name}.nix") (hostnameCfg ./programs name) ];
-  programImports = lib.lists.flatten (map program2import programs);
-in
-{
-  #
-  imports = programImports ++
-    [ 
-      (hostnameCfg ./. "")
-    ];
 
   home.username = "ava";
   home.homeDirectory = "/home/ava";

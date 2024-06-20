@@ -162,6 +162,6 @@ in
     programs.swaylock.enable = true;
     programs.swaylock.settings.image = "${config.home.homeDirectory}/media/images/wallpapers/jerma985.png";
 
-    home.file."media/images/wallpapers".source = ../wallpapers;
+    home.file."media/images/wallpapers".source = ./wallpapers;
   };
 }
