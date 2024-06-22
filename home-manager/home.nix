@@ -28,6 +28,7 @@
           ]; 
       })
     hyfetch
+    fastfetch
     vlc
     mpv
     strawberry

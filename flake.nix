@@ -5,8 +5,10 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     awesome-neovim-plugins.url = "github:m15a/flake-awesome-neovim-plugins";
     awesome-neovim-plugins.inputs.nixpkgs.follows = "nixpkgs";
+    microvm.url = "github:astro/microvm.nix";
+    microvm.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, home-manager, awesome-neovim-plugins }@inputs: 
+  outputs = { self, nixpkgs, home-manager, awesome-neovim-plugins, microvm }@inputs: 
   let
     config = hostname:
     let
@@ -19,11 +21,10 @@
     in
     nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { 
-        inherit hostnameCfg hostname; 
-      };
+      specialArgs = { inherit hostnameCfg hostname inputs; microvm = microvm.nixosModules; };
       modules = [
         ./configuration.nix 
+        ./microvms.nix
         home-manager.nixosModules.home-manager
         {
           home-manager = {

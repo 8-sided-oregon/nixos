@@ -67,7 +67,7 @@ in
       bind =
         [
           "$mod SHIFT, F, exec, firefox"
-          "$mod,  RETURN, exec, kitty"
+          "$mod,  RETURN, exec, kitty --hold hyfetch -b fastfetch"
           "$mod, E, exec, dolphin"
           ''$mod, D, exec, rofi -show drun & sleep 0.2; hyprctl dispatch focuswindow "^(Rofi)"''
           "$mod SHIFT, Q, killactive"
