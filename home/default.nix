@@ -1,6 +1,6 @@
 { config, pkgs, lib, hostnameCfg, ... }: {
   imports = [ 
-    (hostnameCfg ./. "")
+    (hostnameCfg ./machines "")
     ./programs/firefox
     ./programs/hyfetch
     ./programs/hyprland
@@ -37,7 +37,6 @@
     git
     keepassxc
     pass
-    age
     imagemagick
     bat
     exiftool
@@ -63,6 +62,11 @@
     # thumbnail stuff
     xfce.tumbler
     ffmpegthumbnailer
+    kitty
+    grim
+    slurp
+    wl-clipboard
+    pavucontrol
   ];
 
   home.sessionVariables = {

@@ -23,14 +23,15 @@
       system = "x86_64-linux";
       specialArgs = { inherit hostnameCfg hostname inputs; microvm = microvm.nixosModules; };
       modules = [
-        ./configuration.nix 
+        ./configuration.nix
+        (hostnameCfg ./machines "")
         #./microvms.nix
         home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.ava = import ./home-manager/home.nix;
+            users.ava = import ./home;
             extraSpecialArgs = inputs // { inherit hostnameCfg; };
           };
         }
