@@ -78,6 +78,12 @@
     nfs-utils
     psmisc
     gocryptfs
+    man-pages
+    # i like manuals
+    clang-manpages
+    linux-manual
+    man-pages-posix
+    stdman
     # TODO: put steam into home.nix
     steamcmd
   ];
@@ -88,10 +94,6 @@
 
   services.upower.enable = true;
   services.tlp.enable = true;
-  services.logind.lidSwitch = "suspend";
-  services.logind.lidSwitchExternalPower = "suspend";
-  services.logind.lidSwitchDocked = "suspend";
-
 
   # NEVER CHANGE (obv)
   system.stateVersion = "24.05";

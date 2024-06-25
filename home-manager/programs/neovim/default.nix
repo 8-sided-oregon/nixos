@@ -7,8 +7,14 @@
     plugins = with pkgs; [
       {
         plugin = vimPlugins.coq_nvim;
-        config = ''let g:coq_settings = { "auto_start": "shut-up" }'';
-        type = "viml";
+        config = ''
+          vim.g.coq_settings = { 
+            auto_start = 'shut-up',
+            ['limits.completion_manual_timeout'] = 5,
+            ['clients.lsp.resolve_timeout'] = 5,
+          }
+        '';
+        type = "lua";
       }
       vimPlugins.coq-artifacts
       {
@@ -22,7 +28,31 @@
         config = ''
           local lspconfig = require("lspconfig")
           lspconfig.clangd.setup {}
-          lspconfig.rust_analyzer.setup {}
+
+          local on_attach = function(client, bufnr)
+              vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+          end;
+          lspconfig.rust_analyzer.setup({
+            on_attach = on_attach,
+            settings = {
+              ["rust-analyzer"] = {
+                imports = {
+                  granularity = {
+                    group = "module",
+                  },
+                  prefix = "self",
+                },
+                cargo = {
+                  buildScripts = {
+                    enable = true,
+                  },
+                },
+                procMacro = {
+                  enable = true
+                },
+              }
+            }
+          })
         '';
         type = "lua";
       }

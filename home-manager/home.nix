@@ -48,8 +48,15 @@
     yt-dlp
     libreoffice
     kdePackages.neochat
-    signal-desktop
     discordo
+    # TODO: properly fix this
+    (signal-desktop.overrideAttrs (final: prev: {
+      postFixup = ''
+        # Wayland-ify the .desktop file
+        substituteInPlace $out/share/applications/${final.pname}.desktop \
+          --replace-fail "Exec=$out/bin/${final.pname}" "Exec=$out/bin/${final.pname} --enable-features=UseOzonePlatform --ozone-platform=wayland"
+      '';
+    }))
     xfce.thunar-bare
     # for qt6 to work with wayland display scaling properly 
     qt6.qtwayland

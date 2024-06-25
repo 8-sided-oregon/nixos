@@ -2,19 +2,29 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }:
-
+let
+  openedDisk = "/dev/disk/by-uuid/4b5fa290-b005-45ea-8c23-0c51d86c3ec1";
+in
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+    resumeDevice = openedDisk;
+    # IMPORTANT: MUST BE CHANGED TO MATCH SWAP FILE IN ORDER FOR HIBERNATION TO WORK
+    # you can get the resume offset by running `filefrag -v <swapfile>` and then taking the
+    # first value in the physicial_offset column (there are two values for every row) in the
+    # first row.
+    kernelParams = [ "resume_offset=53272576" ];
+  };
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/4b5fa290-b005-45ea-8c23-0c51d86c3ec1";
+    { device = openedDisk;
       fsType = "ext4";
     };
 
@@ -26,7 +36,12 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  swapDevices = [ ];
+  swapDevices = [ 
+    {
+      device = "/swapfile";
+      size = 36 * 1024;
+    }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

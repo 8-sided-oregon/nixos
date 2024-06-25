@@ -14,6 +14,12 @@ in
     default = "1";
   };
 
+  options.hyprland.sleepcmd = lib.mkOption {
+    type = lib.types.str;
+    description = "Sleepy sleep";
+    default = "systemctl suspend";
+  };
+
   config = {
     # when you do `home-manager switch`, you have to manually reload the 
     # hyprland config with `hyprctl reload`, because home-manager does not
@@ -154,7 +160,7 @@ in
           {
             timeout = 375;
             on-timeout = 
-              "[ $(cat /sys/class/power_supply/AC/online) -eq 0 ] && systemctl suspend";
+              "[ $(cat /sys/class/power_supply/AC/online) -eq 0 ] && ${config.hyprland.sleepcmd}";
           }
         ];
     };

@@ -24,7 +24,7 @@
       specialArgs = { inherit hostnameCfg hostname inputs; microvm = microvm.nixosModules; };
       modules = [
         ./configuration.nix 
-        ./microvms.nix
+        #./microvms.nix
         home-manager.nixosModules.home-manager
         {
           home-manager = {
