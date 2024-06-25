@@ -7,8 +7,10 @@
     awesome-neovim-plugins.inputs.nixpkgs.follows = "nixpkgs";
     microvm.url = "github:astro/microvm.nix";
     microvm.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, home-manager, awesome-neovim-plugins, microvm }@inputs: 
+  outputs = { self, nixpkgs, home-manager, awesome-neovim-plugins, microvm, agenix }@inputs: 
   let
     config = hostname:
     let
@@ -27,7 +29,13 @@
         (hostnameCfg ./machines "")
         #./microvms.nix
         home-manager.nixosModules.home-manager
+        agenix.nixosModules.default
         {
+          age = {
+            identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+            # TODO: automatically detect secrets
+            secrets.yggdrasil-lachesis.file = ./secrets/yggdrasil-lachesis.age;
+          };
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;

@@ -6,6 +6,7 @@ in
   imports = [
     ../users/ava.nix
     ../system/crypt
+    ../system/gaming
     ../system/cups
     ../system/git
     ../system/nfs
@@ -70,4 +71,9 @@ in
     man-pages-posix
     stdman
   ];
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 8000 ];
+  };
 }
