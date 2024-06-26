@@ -1,6 +1,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 let
   openedDisk = "/dev/disk/by-uuid/4b5fa290-b005-45ea-8c23-0c51d86c3ec1";
+  yggdrasilAddr = "21c:4df4:e89c:b794:9ee6:5451:6356:76c3";
 in
 {
   imports = [
@@ -12,8 +13,19 @@ in
     ../system/nfs
     ../system/power
     ../system/wm
+    #../system/gnupg
     ../system/yggdrasil
+    ../containers/terraria.nix
   ];
+
+  # For containers
+  networking.nat = {
+    enable = true;
+    internalInterfaces = ["ve-+"];
+    externalInterface = "ens3";
+    # Lazy IPv6 connectivity for the container
+    enableIPv6 = true;
+  };
 
   boot = {
     initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
@@ -74,6 +86,28 @@ in
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 8000 ];
+    allowedTCPPorts = [ 8000 7777 ];
   };
+
+  terraria.autoStart = false;
+
+  services.haproxy.enable = true;
+  services.haproxy.config = ''
+    global
+      daemon
+      maxconn 256
+
+    defaults
+      mode tcp
+      timeout connect 5000ms
+      timeout client 50000ms
+      timeout server 50000ms
+
+    frontend terraria-in
+      bind [${yggdrasilAddr}]:7777
+      default_backend terraria
+    
+    backend terraria
+      server server1 192.168.100.11:7777 maxconn 32
+  '';
 }
